@@ -28,8 +28,9 @@ class Routes {
 
 ///Navigation Service to navigate user to the desired screen without using context.
 class NavigationService {
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  NavigationService(this.navigatorKey);
 
   Future<dynamic> navigateTo(String routeName) {
     return navigatorKey.currentState!.pushNamed(routeName);

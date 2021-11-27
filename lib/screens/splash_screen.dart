@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_chat_app/providers/auth_provider.dart';
 import 'package:open_chat_app/routes/routes.dart';
 import 'package:open_chat_app/utils/custom_colors.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreenState createState() => SplashScreenState();
@@ -12,7 +14,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // checkAuthAndRedirect();
+    checkAuthAndRedirect();
     super.initState();
   }
 
@@ -31,6 +33,8 @@ class SplashScreenState extends State<SplashScreen> {
 
   void checkAuthAndRedirect() async {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
+      var c = Provider.of<AuthProvider>(context, listen: false).getUserToken();
+      print(c);
       if (auth) {
         Navigator.of(context).pushNamed(Routes.HOME_PAGE);
       } else {
