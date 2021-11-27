@@ -6,10 +6,34 @@ class Authentication extends StatefulWidget {
 }
 
 class AuthenticationState extends State<Authentication> {
+  TextEditingController mobileNumController = TextEditingController();
+  FocusNode mobileFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Welcome to auth page"),
+      appBar: AppBar(
+        title: Text("LOGIN PAGE"),
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(
+        children: [
+          TextField(
+            focusNode: mobileFocusNode,
+            controller: mobileNumController,
+            keyboardType: TextInputType.number,
+            key: Key('mobileNum'),
+            decoration: InputDecoration(labelText: "Enter Mobile"),
+          ),
+          ElevatedButton(
+            child: Text("submit"),
+            onPressed: () => {sendOTP()},
+          )
+        ],
+      ),
     );
+  }
+
+  sendOTP() {
   }
 }

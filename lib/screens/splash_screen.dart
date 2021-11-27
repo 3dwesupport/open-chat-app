@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_chat_app/routes/routes.dart';
+import 'package:open_chat_app/utils/custom_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreenState createState() => SplashScreenState();
 }
 
 class SplashScreenState extends State<SplashScreen> {
+  bool auth = false;
+
   @override
   void initState() {
     // checkAuthAndRedirect();
@@ -16,16 +19,18 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Splash Screen"),
-      ),
-      body: Center(child: Text("Hello World! I am Splash Screen")),
+      backgroundColor: CustomColors.splashBg,
+      body: Container(
+          margin: EdgeInsets.all(50),
+          child: Center(
+              child: Image(
+                  image: AssetImage(
+                      'assets/logos/open_chat_logo_with_text.png')))),
     );
   }
 
   void checkAuthAndRedirect() async {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      bool auth = true;
       if (auth) {
         Navigator.of(context).pushNamed(Routes.HOME_PAGE);
       } else {
