@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:open_chat_app/socket.dart';
+import 'package:open_chat_app/request_handler/socket.dart';
 
 class Homepage extends StatefulWidget {
   @override
