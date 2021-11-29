@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,17 +15,24 @@ import 'package:open_chat_app/utils/enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  final http.Client client = http.Client();
+  final http.Client client;
   final Connectivity connectivity = Connectivity();
   final SharedPreferences sharedPreferences;
 
-  Api(this.sharedPreferences);
+  Api(this.sharedPreferences, this.client);
 
-  request(item, [params, body]) async {
+  request(item, [Map<String, String>? params, body, extraParams]) async {
     switch (item) {
-      case Constants.appName:
-        return await createRequest(item, params, body, Method.GET,
-            HeaderTypes.AUTHENTICATED, Service.LOGIN);
+      case Constants.send_login_otp:
+        return await createRequest(
+            item,
+            params,
+            body,
+            Method.POST,
+            HeaderTypes.FOR_AUTHENTICATION,
+            Service.LOGIN,
+            extraParams['phone'],
+            extraParams["otp"]);
     }
   }
 
@@ -40,36 +49,40 @@ class Api {
     return Uri.https(url, item, params);
   }
 
-  createRequest(item, params, body, Method method, HeaderTypes headerTypes,
-      Service service) async {
+  createRequest(item, Map<String, String>? params, body, Method method,
+      HeaderTypes headerTypes, Service service,
+      [phone, otp]) async {
     Response response;
     if (body == null) {
       body = "";
     }
     body = jsonEncode(body);
     if (params == null) {
-      params = <String, dynamic>{};
+      params = <String, String>{};
     }
     switch (method) {
       case Method.GET:
-        response = await client.get(getURL(service, item, params!),
-            headers: await getHeaders(headerTypes));
+        response = await client.get(getURL(service, item, params),
+            headers: await getHeaders(headerTypes, phone, otp));
         break;
       case Method.POST:
-        response = await client.post(getURL(service, item, params!),
-            headers: await getHeaders(headerTypes), body: body);
+        response = await client.post(getURL(service, item, params),
+            headers: await getHeaders(headerTypes, phone, otp), body: body);
         break;
       case Method.PUT:
-        response = await client.put(getURL(service, item, params!),
-            headers: await getHeaders(headerTypes), body: body);
+        response = await client.put(getURL(service, item, params),
+            headers: await getHeaders(headerTypes, phone, otp), body: body);
         break;
       case Method.DELETE:
-        response = await client.delete(getURL(service, item, params!),
-            headers: await getHeaders(headerTypes));
+        response = await client.delete(getURL(service, item, params),
+            headers: await getHeaders(headerTypes, phone, otp));
         break;
     }
 
     if (response.statusCode == 200) {
+      if (response.body != "") {
+        return json.decode(response.body);
+      }
       return response.body;
     }
     if (response.statusCode != 200) {
@@ -99,14 +112,26 @@ class Api {
         duration: Duration(seconds: seconds));
   }
 
-  getHeaders(HeaderTypes headerTypes) {
+  getHeaders(HeaderTypes headerTypes, String? phone, String? otp) {
     switch (headerTypes) {
       case HeaderTypes.AUTHENTICATED:
         return;
       case HeaderTypes.NON_AUTHENTICATED:
         return;
       case HeaderTypes.FOR_AUTHENTICATION:
-        return;
+        final jwt = JWT({
+          "otp": otp != null ? otp : "",
+          "phone": phone!,
+          "countrycode": "+91",
+          "source": "app",
+          "ipaddress": ""
+        });
+        String key = dotenv.env['OTP_TOKEN_KEY']!;
+        var token = jwt.sign(SecretKey(key));
+        return <String, String>{
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: token
+        };
     }
   }
 }

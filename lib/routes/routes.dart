@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:open_chat_app/screens/authentication.dart';
+import 'package:open_chat_app/screens/authentication/authentication.dart';
 import 'package:open_chat_app/screens/splash_screen.dart';
 
 import '../screens/homepage.dart';
@@ -27,7 +27,7 @@ class Routes {
 }
 
 ///Navigation Service to navigate user to the desired screen without using context.
-class NavigationService {
+class NavigationService extends ChangeNotifier {
   final GlobalKey<NavigatorState> navigatorKey;
 
   NavigationService(this.navigatorKey);

@@ -33,8 +33,6 @@ class SplashScreenState extends State<SplashScreen> {
 
   void checkAuthAndRedirect() async {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      var c = Provider.of<AuthProvider>(context, listen: false).getUserToken();
-      print(c);
       if (auth) {
         Navigator.of(context).pushNamed(Routes.HOME_PAGE);
       } else {

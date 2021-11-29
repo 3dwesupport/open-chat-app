@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:open_chat_app/providers/data_provider.dart' as dp;
+import 'package:open_chat_app/providers/data_provider.dart';
 import 'package:open_chat_app/routes/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static final navigatorKey = new GlobalKey<NavigatorState>();
+
 
   @override
   Widget build(BuildContext context) {
