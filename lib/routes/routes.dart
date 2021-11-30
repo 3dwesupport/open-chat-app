@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:open_chat_app/screens/authentication/authentication.dart';
+import 'package:open_chat_app/screens/authentication/signup.dart';
 import 'package:open_chat_app/screens/splash_screen.dart';
 
 import '../screens/homepage.dart';
@@ -14,6 +15,7 @@ class SetupRoutes {
       Routes.HOME_PAGE: (context) => Homepage(),
       Routes.SPLASH_SCREEN: (context) => SplashScreen(),
       Routes.AUTH_PAGE: (context) => Authentication(),
+      Routes.SIGN_UP: (context) => SignUp(),
     };
   }
 }
@@ -24,6 +26,7 @@ class Routes {
   static const String HOME_PAGE = 'home_page';
   static const String SPLASH_SCREEN = 'splash_screen_page';
   static const String AUTH_PAGE = 'authentication_page';
+  static const String SIGN_UP = 'signup_page';
 }
 
 ///Navigation Service to navigate user to the desired screen without using context.

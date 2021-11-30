@@ -10,8 +10,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-  bool auth = false;
-
   @override
   void initState() {
     checkAuthAndRedirect();
@@ -32,11 +30,16 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void checkAuthAndRedirect() async {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      bool auth = await Provider.of<AuthProvider>(context, listen: false)
+          .checkUserAuth();
       if (auth) {
-        Navigator.of(context).pushNamed(Routes.HOME_PAGE);
+        // Navigator.of(context).pushNamed(Routes.HOME_PAGE);
+        Provider.of<NavigationService>(context, listen: false)
+            .navigateAndReplaceTo(Routes.HOME_PAGE);
       } else {
-        Navigator.of(context).pushNamed(Routes.AUTH_PAGE);
+        Provider.of<NavigationService>(context, listen: false)
+            .navigateAndReplaceTo(Routes.AUTH_PAGE);
       }
     });
   }

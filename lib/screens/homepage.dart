@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_chat_app/providers/auth_provider.dart';
 import 'package:open_chat_app/request_handler/socket.dart';
+import 'package:provider/provider.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -14,9 +16,11 @@ class HomepageState extends State<Homepage> {
       body: SafeArea(
         child: Container(
           child: GestureDetector(
-            child: Text("Welcome to homepage"), onTap: () => {
-          SocketConnection().connect()
-          },),
+            child: Text(Provider.of<AuthProvider>(context, listen: false)
+                .getUserInfo()
+                .firstName),
+            onTap: () => {SocketConnection().connect()},
+          ),
         ),
       ),
     );

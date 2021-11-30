@@ -18,10 +18,9 @@ class AuthenticationState extends State<Authentication> {
   FocusNode mobileFocusNode = FocusNode();
   FocusNode otpFocusNode = FocusNode();
   TextEditingController otpController = TextEditingController();
-  bool existingUser = false;
-  bool appUser = false;
   String otp = "";
   int formIndex = 0;
+  bool appUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,6 @@ class AuthenticationState extends State<Authentication> {
     var result = await Provider.of<AuthProvider>(context, listen: false)
         .sendOTP(mobileNumController.text, otp);
     if (result["otp_sent"]) {
-      existingUser = result["existinguser"];
       appUser = result["existingsource"];
       setState(() {
         formIndex = 1;
@@ -54,10 +52,17 @@ class AuthenticationState extends State<Authentication> {
     }
   }
 
-  submitOTP() {
+  submitOTP() async {
     if (otpController.text == otp) {
-      Provider.of<NavigationService>(context,listen: false)
-          .navigateAndReplaceTo(Routes.HOME_PAGE);
+      await Provider.of<AuthProvider>(context, listen: false)
+          .otpVerified(mobileNumController.text);
+      if (appUser) {
+        Provider.of<NavigationService>(context, listen: false)
+            .navigateAndReplaceTo(Routes.HOME_PAGE);
+      } else {
+        Provider.of<NavigationService>(context, listen: false)
+            .navigateAndReplaceTo(Routes.SIGN_UP);
+      }
     }
   }
 

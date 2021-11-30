@@ -15,7 +15,7 @@ class User {
       uid: json['uid'],
       lastName: json['lastname'],
       firstName: json['firstname'],
-      online: json['online'],
+      online: json['online'] != null ? json['online'] : "N",
     );
   }
 

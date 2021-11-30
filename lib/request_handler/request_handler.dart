@@ -24,6 +24,7 @@ class Api {
   request(item, [Map<String, String>? params, body, extraParams]) async {
     switch (item) {
       case Constants.send_login_otp:
+      case Constants.add_new_user:
         return await createRequest(
             item,
             params,
@@ -33,6 +34,18 @@ class Api {
             Service.LOGIN,
             extraParams['phone'],
             extraParams["otp"]);
+      case Constants.login:
+        return await createRequest(
+            item,
+            params,
+            body,
+            Method.GET,
+            HeaderTypes.FOR_AUTHENTICATION,
+            Service.LOGIN,
+            extraParams['phone']);
+      case Constants.check_auth:
+        return await createRequest(item, params, body, Method.GET,
+            HeaderTypes.AUTHENTICATED, Service.LOGIN);
     }
   }
 
@@ -115,9 +128,15 @@ class Api {
   getHeaders(HeaderTypes headerTypes, String? phone, String? otp) {
     switch (headerTypes) {
       case HeaderTypes.AUTHENTICATED:
-        return;
+        String token = sharedPreferences.getString(Constants.token)!;
+        return <String, String>{
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: token
+        };
       case HeaderTypes.NON_AUTHENTICATED:
-        return;
+        return <String, String>{
+          HttpHeaders.contentTypeHeader: 'application/json',
+        };
       case HeaderTypes.FOR_AUTHENTICATION:
         final jwt = JWT({
           "otp": otp != null ? otp : "",
