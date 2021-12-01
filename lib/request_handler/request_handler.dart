@@ -21,7 +21,10 @@ class Api {
 
   Api(this.sharedPreferences, this.client);
 
-  request(item, [Map<String, String>? params, body, extraParams]) async {
+  request(String item,
+      [Map<String, String>? params,
+      body,
+      Map<String, String>? extraParams]) async {
     switch (item) {
       case Constants.send_login_otp:
       case Constants.add_new_user:
@@ -32,7 +35,7 @@ class Api {
             Method.POST,
             HeaderTypes.FOR_AUTHENTICATION,
             Service.LOGIN,
-            extraParams['phone'],
+            extraParams!['phone'],
             extraParams["otp"]);
       case Constants.login:
         return await createRequest(
@@ -42,9 +45,13 @@ class Api {
             Method.GET,
             HeaderTypes.FOR_AUTHENTICATION,
             Service.LOGIN,
-            extraParams['phone']);
+            extraParams!['phone']);
       case Constants.check_auth:
         return await createRequest(item, params, body, Method.GET,
+            HeaderTypes.AUTHENTICATED, Service.LOGIN);
+
+      case Constants.update_user:
+        return await createRequest(item, params, body, Method.PUT,
             HeaderTypes.AUTHENTICATED, Service.LOGIN);
     }
   }
@@ -62,7 +69,8 @@ class Api {
     return Uri.https(url, item, params);
   }
 
-  createRequest(item, Map<String, String>? params, body, Method method,
+  /// @param [item]
+  createRequest(String item, Map<String, String>? params, body, Method method,
       HeaderTypes headerTypes, Service service,
       [phone, otp]) async {
     Response response;
@@ -98,6 +106,9 @@ class Api {
       }
       return response.body;
     }
+    if (response.statusCode == 401) {
+      return "";
+    }
     if (response.statusCode != 200) {
       var connectivityResult = await (connectivity.checkConnectivity());
       if (!(connectivityResult == ConnectivityResult.mobile ||
@@ -128,7 +139,10 @@ class Api {
   getHeaders(HeaderTypes headerTypes, String? phone, String? otp) {
     switch (headerTypes) {
       case HeaderTypes.AUTHENTICATED:
-        String token = sharedPreferences.getString(Constants.token)!;
+        String? token = sharedPreferences.getString(Constants.token);
+        if (token == null) {
+          token = "";
+        }
         return <String, String>{
           HttpHeaders.contentTypeHeader: 'application/json',
           HttpHeaders.authorizationHeader: token

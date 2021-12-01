@@ -7,6 +7,7 @@ class Constants {
   static const String add_new_user = '/adduser';
   static const String send_login_otp = '/sendloginotp';
   static const String check_auth = '/checkauth';
+  static const String update_user = '/updateuser';
 
   /// Chat Requests
   static const String get_conversation = "";
@@ -17,6 +18,4 @@ class Constants {
 
   ///Shared Prefs
   static const String token = "user-auth-token";
-
-
 }

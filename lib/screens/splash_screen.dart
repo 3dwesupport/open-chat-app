@@ -31,16 +31,10 @@ class SplashScreenState extends State<SplashScreen> {
 
   void checkAuthAndRedirect() async {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      bool auth = await Provider.of<AuthProvider>(context, listen: false)
+      String redirect = await Provider.of<AuthProvider>(context, listen: false)
           .checkUserAuth();
-      if (auth) {
-        // Navigator.of(context).pushNamed(Routes.HOME_PAGE);
-        Provider.of<NavigationService>(context, listen: false)
-            .navigateAndReplaceTo(Routes.HOME_PAGE);
-      } else {
-        Provider.of<NavigationService>(context, listen: false)
-            .navigateAndReplaceTo(Routes.AUTH_PAGE);
-      }
+      Provider.of<NavigationService>(context, listen: false)
+          .navigateAndReplaceTo(redirect);
     });
   }
 }

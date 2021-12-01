@@ -5,6 +5,7 @@ class Strings {
   static const String send_otp = "Send OTP";
   static const String verify_otp = "Verify OTP";
   static const String sent_a_code = "We have sent a code";
+  static const String save_changes = "save changes";
 }
 
 extension Casing on String {

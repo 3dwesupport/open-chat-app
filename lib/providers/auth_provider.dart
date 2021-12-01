@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:open_chat_app/models/user_model.dart';
 import 'package:open_chat_app/request_handler/request_handler.dart';
+import 'package:open_chat_app/routes/routes.dart';
 import 'package:open_chat_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +29,14 @@ class AuthProvider extends ChangeNotifier {
     if (user != null) {
       return user;
     }
-    return User(uid: '', online: '', firstName: '', lastName: '');
+    return User(
+        uid: '',
+        online: '',
+        firstName: '',
+        lastName: '',
+        username: "",
+        phone: "",
+        userImgUrl: "");
   }
 
   otpVerified(phone) async {
@@ -49,9 +57,23 @@ class AuthProvider extends ChangeNotifier {
     if (result != null && result != "") {
       await sharedPreferences.setString(Constants.token, result["token"]);
       user = User.fromJson(result["user"]);
-      return true;
+      if (result["user"]["appuser"] != null && result["user"]["appuser"]) {
+        return Routes.HOME_PAGE;
+      }
+      return Routes.SIGN_UP;
     } else {
-      return false;
+      return Routes.AUTH_PAGE;
     }
+  }
+
+  saveUserData(User updatedUser) async {
+    user!
+      ..firstName = updatedUser.firstName
+      ..lastName = updatedUser.lastName
+      ..online = updatedUser.online
+      ..username = updatedUser.username
+      ..userImgUrl = updatedUser.userImgUrl
+      ..appUser = updatedUser.appUser;
+    await api.request(Constants.update_user, {}, user!.toJson());
   }
 }

@@ -13,14 +13,38 @@ class HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          child: GestureDetector(
-            child: Text(Provider.of<AuthProvider>(context, listen: false)
-                .getUserInfo()
-                .firstName),
-            onTap: () => {SocketConnection().connect()},
+      appBar: AppBar(
+        title: Text(
+          "Chats",
+          style: TextStyle(color: Colors.black87, fontSize: 25),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () => {},
+            color: Colors.black54,
           ),
+          IconButton(
+            icon: Icon(Icons.more_horiz),
+            onPressed: () => {},
+            color: Colors.black87,
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              child: GestureDetector(
+                child: Text(Provider.of<AuthProvider>(context, listen: false)
+                    .getUserInfo()
+                    .firstName),
+                onTap: () => {SocketConnection().connect()},
+              ),
+            ),
+          ],
         ),
       ),
     );
