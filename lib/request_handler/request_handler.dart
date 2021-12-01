@@ -53,6 +53,11 @@ class Api {
       case Constants.update_user:
         return await createRequest(item, params, body, Method.PUT,
             HeaderTypes.AUTHENTICATED, Service.LOGIN);
+
+      case Constants.get_conversation:
+      case Constants.set_user_online:
+        return await createRequest(item, params, body, Method.GET,
+            HeaderTypes.AUTHENTICATED, Service.CHAT);
     }
   }
 

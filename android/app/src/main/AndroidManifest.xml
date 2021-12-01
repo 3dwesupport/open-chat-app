@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.itinker.io.open_chat_app">
    <application
-        android:label="open_chat_app"
+        android:label="Open Chat"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
