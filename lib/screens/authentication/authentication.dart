@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_chat_app/providers/auth_provider.dart';
+import 'package:open_chat_app/providers/navigation_provider.dart';
 import 'package:open_chat_app/routes/routes.dart';
 import 'package:open_chat_app/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
@@ -57,10 +58,10 @@ class AuthenticationState extends State<Authentication> {
       await Provider.of<AuthProvider>(context, listen: false)
           .otpVerified(mobileNumController.text);
       if (appUser) {
-        Provider.of<NavigationService>(context, listen: false)
+        Provider.of<NavigationProvider>(context, listen: false)
             .navigateAndReplaceTo(Routes.HOME_PAGE);
       } else {
-        Provider.of<NavigationService>(context, listen: false)
+        Provider.of<NavigationProvider>(context, listen: false)
             .navigateAndReplaceTo(Routes.SIGN_UP);
       }
     }

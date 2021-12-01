@@ -28,18 +28,3 @@ class Routes {
   static const String AUTH_PAGE = 'authentication_page';
   static const String SIGN_UP = 'signup_page';
 }
-
-///Navigation Service to navigate user to the desired screen without using context.
-class NavigationService extends ChangeNotifier {
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  NavigationService(this.navigatorKey);
-
-  Future<dynamic> navigateTo(String routeName) {
-    return navigatorKey.currentState!.pushNamed(routeName);
-  }
-
-  Future<dynamic> navigateAndReplaceTo(String routeName) {
-    return navigatorKey.currentState!.pushReplacementNamed(routeName);
-  }
-}
