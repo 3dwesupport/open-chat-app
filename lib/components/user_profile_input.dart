@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_chat_app/utils/custom_colors.dart';
 
 class UserProfileInput extends StatelessWidget {
   final FocusNode mobileFocusNode;
@@ -51,9 +52,9 @@ class UserProfileInput extends StatelessWidget {
                 enabled: enabled,
                 contentPadding: EdgeInsets.all(10),
                 prefixIcon: prefixIcon,
-                floatingLabelStyle: TextStyle(color: Colors.orange),
+                floatingLabelStyle: TextStyle(color: CustomColors.themeOrange),
                 fillColor: Colors.white,
-                focusColor: Colors.orange,
+                focusColor: CustomColors.themeOrange,
                 border: InputBorder.none),
           ),
         ),

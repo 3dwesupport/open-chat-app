@@ -59,10 +59,10 @@ class AuthenticationState extends State<Authentication> {
           .otpVerified(mobileNumController.text);
       if (appUser) {
         Provider.of<NavigationProvider>(context, listen: false)
-            .navigateAndReplaceTo(Routes.HOME_PAGE);
+            .navigateAndReplaceTo(Routes.HOME_SCREEN);
       } else {
         Provider.of<NavigationProvider>(context, listen: false)
-            .navigateAndReplaceTo(Routes.SIGN_UP);
+            .navigateAndReplaceTo(Routes.SIGN_UP_SCREEN);
       }
     }
   }

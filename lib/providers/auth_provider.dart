@@ -58,9 +58,9 @@ class AuthProvider extends ChangeNotifier {
       await sharedPreferences.setString(Constants.token, result["token"]);
       user = User.fromJson(result["user"]);
       if (result["user"]["appuser"] != null && result["user"]["appuser"]) {
-        return Routes.HOME_PAGE;
+        return Routes.HOME_SCREEN;
       }
-      return Routes.SIGN_UP;
+      return Routes.SIGN_UP_SCREEN;
     } else {
       return Routes.AUTH_PAGE;
     }

@@ -39,6 +39,7 @@ dependencies:
   dart_jsonwebtoken: ^2.4.0
   pin_code_fields: ^7.3.0
   google_fonts: ^2.1.0
+  flutter_chat_bubble: ^2.0.0
 
 dev_dependencies:
   flutter_test:

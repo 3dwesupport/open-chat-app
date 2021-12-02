@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_chat_app/components/custom_text_field.dart';
+import 'package:open_chat_app/utils/custom_colors.dart';
 import 'package:open_chat_app/utils/strings.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -41,7 +42,7 @@ class MobileNumDetails extends StatelessWidget {
             key: Key(Strings.mobile_number),
             prefixIcon: Icon(
               Icons.local_phone,
-              color: Colors.orange,
+              color: CustomColors.themeOrange,
             ),
             keyboardType: TextInputType.number,
           ),

@@ -12,4 +12,8 @@ class NavigationProvider extends ChangeNotifier {
   Future<dynamic> navigateAndReplaceTo(String routeName) {
     return navigatorKey.currentState!.pushReplacementNamed(routeName);
   }
+
+  Future<dynamic> navigateToWithArgs(String routeName, args) {
+    return navigatorKey.currentState!.pushNamed(routeName, arguments: args);
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_chat_app/utils/custom_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final FocusNode mobileFocusNode;
@@ -40,9 +41,9 @@ class CustomTextField extends StatelessWidget {
             prefixIcon: prefixIcon,
             label: Text(labelText),
             labelStyle: TextStyle(color: Colors.grey[600]),
-            floatingLabelStyle: TextStyle(color: Colors.orange),
+            floatingLabelStyle: TextStyle(color: CustomColors.themeOrange),
             fillColor: Colors.white,
-            focusColor: Colors.orange,
+            focusColor: CustomColors.themeOrange,
             border: InputBorder.none),
       ),
     );

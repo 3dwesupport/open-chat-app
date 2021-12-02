@@ -134,6 +134,6 @@ class SignUpState extends State<SignUp> {
         appUser: true);
     await Provider.of<AuthProvider>(context, listen: false).saveUserData(user);
     await Provider.of<NavigationProvider>(context, listen: false)
-        .navigateAndReplaceTo(Routes.HOME_PAGE);
+        .navigateAndReplaceTo(Routes.HOME_SCREEN);
   }
 }
