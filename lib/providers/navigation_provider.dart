@@ -16,4 +16,8 @@ class NavigationProvider extends ChangeNotifier {
   Future<dynamic> navigateToWithArgs(String routeName, args) {
     return navigatorKey.currentState!.pushNamed(routeName, arguments: args);
   }
+
+  closeScreen() {
+    return navigatorKey.currentState!.pop();
+  }
 }

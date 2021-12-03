@@ -3,6 +3,7 @@ import 'package:open_chat_app/models/user_model.dart';
 import 'package:open_chat_app/screens/authentication/authentication.dart';
 import 'package:open_chat_app/screens/authentication/signup.dart';
 import 'package:open_chat_app/screens/conversation.dart';
+import 'package:open_chat_app/screens/edit_details.dart';
 import 'package:open_chat_app/screens/splash_screen.dart';
 
 import '../screens/homepage.dart';
@@ -18,6 +19,7 @@ class SetupRoutes {
       Routes.SPLASH_SCREEN: (context) => SplashScreen(),
       Routes.AUTH_PAGE: (context) => Authentication(),
       Routes.SIGN_UP_SCREEN: (context) => SignUp(),
+      Routes.EDIT_DETAILS_SCREEN: (context) => EditDetails(),
       Routes.CONVERSATION_SCREEN: (context) =>
           Conversation(ModalRoute.of(context)!.settings.arguments as User),
     };
@@ -32,4 +34,5 @@ class Routes {
   static const String AUTH_PAGE = 'authentication_page';
   static const String SIGN_UP_SCREEN = 'signup_page';
   static const String CONVERSATION_SCREEN = 'conversation_screen';
+  static const String EDIT_DETAILS_SCREEN = 'edit_details_page';
 }

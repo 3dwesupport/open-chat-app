@@ -1,4 +1,4 @@
-# open_chat_app
+# OPEN CHAT APP
 
 chat application
 

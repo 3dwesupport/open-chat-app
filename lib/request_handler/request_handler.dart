@@ -47,6 +47,7 @@ class Api {
             Service.LOGIN,
             extraParams!['phone']);
       case Constants.check_auth:
+      case Constants.search_user:
         return await createRequest(item, params, body, Method.GET,
             HeaderTypes.AUTHENTICATED, Service.LOGIN);
 

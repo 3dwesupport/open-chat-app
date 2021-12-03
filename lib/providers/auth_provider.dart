@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:open_chat_app/models/user_model.dart';
+import 'package:open_chat_app/providers/navigation_provider.dart';
 import 'package:open_chat_app/request_handler/request_handler.dart';
 import 'package:open_chat_app/routes/routes.dart';
 import 'package:open_chat_app/utils/constants.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   User? user;
 
-  bool isLoggedIn = false;
   final SharedPreferences sharedPreferences;
   final Api api;
   bool existingUser = false;
@@ -75,5 +76,24 @@ class AuthProvider extends ChangeNotifier {
       ..userImgUrl = updatedUser.userImgUrl
       ..appUser = updatedUser.appUser;
     await api.request(Constants.update_user, {}, user!.toJson());
+  }
+
+  logout(context) async {
+    user = null;
+    await sharedPreferences.clear();
+    Provider.of<NavigationProvider>(context, listen: false)
+        .navigateAndReplaceTo(Routes.AUTH_PAGE);
+  }
+
+  searchUser(String searchString) async {
+    var usersList = await api
+        .request(Constants.search_user, {"searchstring": searchString});
+    List<User> users = [];
+    if (usersList != null) {
+      for (var user in usersList) {
+        users.add(User.fromJson(user));
+      }
+    }
+    return users;
   }
 }

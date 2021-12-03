@@ -9,6 +9,7 @@ class Constants {
   static const String check_auth = '/checkauth';
   static const String update_user = '/updateuser';
   static const String set_user_online = '/setuseronline';
+  static const String search_user = '/searchappuser';
 
   /// Chat Requests
   static const String get_conversation = "/getconversation";
